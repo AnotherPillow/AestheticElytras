@@ -42,38 +42,39 @@ public class ElytraFeatureRendererMixin {
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider,
            int i, LivingEntity livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) throws ExecutionException, InterruptedException {
         ItemStack itemStack = livingEntity.getEquippedStack(EquipmentSlot.CHEST);
-
         String itemName = itemStack.getName().getString();
         boolean hasCustomName = !Objects.equals(itemName, "Elytra");
 
         if (itemStack.isOf(Items.ELYTRA)) {
             Identifier identifier = SKIN;
-
-            if (livingEntity instanceof AbstractClientPlayerEntity player) {
-                if (hasCustomName) {
-                    identifier = ElytraTextureCache.getOrRequest(itemName);
-                    if (identifier == null) identifier = SKIN;
+            if (livingEntity instanceof AbstractClientPlayerEntity) {
+                AbstractClientPlayerEntity abstractClientPlayerEntity = (AbstractClientPlayerEntity)livingEntity;
+                SkinTextures skinTextures = abstractClientPlayerEntity.getSkinTextures();
+                if (skinTextures.elytraTexture() != null) {
+                    identifier = skinTextures.elytraTexture();
+                } else if (skinTextures.capeTexture() != null && abstractClientPlayerEntity.isPartVisible(PlayerModelPart.CAPE)) {
+                    identifier = skinTextures.capeTexture();
                 } else {
-                    SkinTextures skin = player.getSkinTextures();
-                    if (skin != null) {
-                        if (skin.elytraTexture() != null) identifier = skin.elytraTexture();
-                        else if (skin.capeTexture() != null && player.isPartVisible(PlayerModelPart.CAPE))
-                            identifier = skin.capeTexture();
-                    }
+                    identifier = SKIN;
+                }
+            } else if (hasCustomName) {
+                try {
+                    identifier = new Identifier(Aestheticelytras.MOD_ID, "textures/cape_textures/" + (itemName + ".png")
+                            .toLowerCase().replaceAll(" ", "-"));
+                } catch (Exception e) {
+                    Aestheticelytras.LOGGER.warn("Got error creating elytra identifier: " + e.getMessage());
                 }
             }
 
             matrixStack.push();
             matrixStack.translate(0.0F, 0.0F, 0.125F);
-            ((ElytraFeatureRenderer<LivingEntity, EntityModel<LivingEntity>>) (Object) this).getContextModel().copyStateTo(
-                    ((ElytraFeatureRenderer<LivingEntity, EntityModel<LivingEntity>>) (Object) this).elytra);
-            ((ElytraFeatureRenderer<LivingEntity, EntityModel<LivingEntity>>) (Object) this).elytra.setAngles(livingEntity, f, g, j, k, l);
-            VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(
-                    vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(identifier), false, itemStack.hasGlint()
-            );
-            ((ElytraFeatureRenderer<LivingEntity, EntityModel<LivingEntity>>) (Object) this).elytra.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+            ((ElytraFeatureRenderer)(Object)this).getContextModel().copyStateTo(((ElytraFeatureRenderer)(Object)this).elytra);
+            ((ElytraFeatureRenderer)(Object)this).elytra.setAngles(livingEntity, f, g, j, k, l);
+            VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(identifier), false, itemStack.hasGlint());
+            ((ElytraFeatureRenderer)(Object)this).elytra.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
             matrixStack.pop();
         }
+
         ci.cancel();
     }
 }
