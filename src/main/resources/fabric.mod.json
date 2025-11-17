@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "aestheticelytras",
+  "version": "${version}",
+  "name": "AestheticElytras",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/aestheticelytras/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.anotherpillow.aestheticelytras.client.AestheticelytrasClient"
+    ],
+    "main": [
+      "com.anotherpillow.aestheticelytras.Aestheticelytras"
+    ]
+  },
+  "accessWidener" : "aestheticelytras.accesswidener",
+  "mixins": [
+    "aestheticelytras.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
