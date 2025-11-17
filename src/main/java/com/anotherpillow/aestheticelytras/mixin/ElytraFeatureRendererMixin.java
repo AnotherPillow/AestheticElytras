@@ -1,8 +1,6 @@
 package com.anotherpillow.aestheticelytras.mixin;
 
 import com.anotherpillow.aestheticelytras.Aestheticelytras;
-import com.anotherpillow.aestheticelytras.cache.ElytraTextureCache;
-import com.anotherpillow.aestheticelytras.cache.UUIDCache;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
