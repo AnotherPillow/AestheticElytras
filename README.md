@@ -2,9 +2,11 @@
 
 A mod that lets your displayed elytras take a cape's texture.
 
+![icon](marketing/2026-05-15_20.58.42_cropped.png)
+
 ## Usage
 
-1. Install the mod on your client
+1. Install the mod on your client (download it from [modrinth](https://modrinth.com/mod/))
 2. Rename your elytra - see [Textures](#Textures) for options
 3. Display it in an armour stand!
 
@@ -52,4 +54,4 @@ For example, you can name your elytra `Minecon 2016`, and that will be equivalen
 
 ### Custom Textures
 
-You can add custom textures by adding a `.png` file following the [aforementioned name guidelines](#Textures) to the folder `aestheticelytras/textures/cape_textures`.
+You can add custom textures by adding a `.png` file following the [aforementioned name guidelines](#Textures) to the folder `aestheticelytras/textures/cape_textures` with a resource pack.
